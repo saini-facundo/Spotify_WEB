@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Token } from '../interfaces/token.inteface';
+import { map } from "rxjs/operators";
 
 
 @Injectable({
@@ -36,5 +37,16 @@ export class SpotifyService {
     });
     return this.http.get(url, { headers });
 
+  }
+
+  searchArtist(term: string, token: Token) {
+    const url = `https://api.spotify.com/v1/search?q=${term}&type=artist`;
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token.access_token}`
+    });
+    return this.http.get(url, { headers })
+      .pipe(
+        map((data: any) => { return data.artists.items; })
+      );
   }
 }
