@@ -1,3 +1,25 @@
-<p>search works!</p>
-
 <p>{{user.email}}</p>
+
+<mat-form-field class="example-form-field">
+  <mat-label>Search Artist</mat-label>
+  <input matInput
+    type="text"
+    [(ngModel)]="searchTerm"
+    (keyup)="search(searchTerm)">
+  <button *ngIf="searchTerm"
+    matSuffix
+    mat-icon-button
+    aria-label="Clear"
+    (click)="searchTerm=''">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+
+<div *ngIf="artists.length > 0 ">
+  <ul>
+    <li style="color: white;"
+      *ngFor="let artist of artists">
+      {{artist.name}}
+    </li>
+  </ul>
+</div>

@@ -52,6 +52,10 @@ export class SearchComponent implements OnInit {
 
   userImg = "";
 
+  searchTerm = "";
+
+  artists: any[] = [];
+
   getRefreshAndAccessToken(code: string) {
     this.spotifyService.requestRefreshAndAccessToken(code).subscribe((data: any) => {
       this.token = data;
@@ -78,6 +82,14 @@ export class SearchComponent implements OnInit {
       this.getRefreshAndAccessToken(code);
     }
 
+  }
+
+  search(term: string) {
+    if (term.length > 2) {
+      this.spotifyService.searchArtist(term, this.token).subscribe((artists: any) => {
+        this.artists = artists;
+      });
+    }
   }
 
 }

@@ -1,3 +1,5 @@
-p {
+p,
+mat-label,
+input {
   color: var(--font-color);
 }
