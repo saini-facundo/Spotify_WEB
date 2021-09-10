@@ -1,0 +1,38 @@
+.login-card {
+  background-color: var(--background-highlight);
+  color: var(--font-color);
+  padding: 30px;
+  padding-bottom: 50px;
+  max-width: 600px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: auto;
+  margin-top: 40px;
+}
+
+mat-form-field {
+  width: 70%;
+  border-radius: 40px;
+  padding: 0 20px 0 30px;
+  margin-bottom: 20px;
+}
+
+input,
+mat-form-field {
+  background-color: var(--font-color);
+  color: black;
+}
+
+.login-button {
+  width: 80%;
+  padding: 15px;
+  margin: 20px ;
+  border-radius: 40px;
+  background-color: var(--accent-color);
+  font-size: x-large;
+  font-weight: bold;
+  color: var(--font-color);
+  cursor: pointer;
+  text-transform: uppercase;
+}
