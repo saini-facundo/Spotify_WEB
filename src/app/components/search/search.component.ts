@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Token } from 'src/app/interfaces/token.inteface';
 import { SpotifyService } from 'src/app/services/spotify.service';
 import { User } from '../../interfaces/user.interface';
@@ -11,7 +12,8 @@ import { User } from '../../interfaces/user.interface';
 export class SearchComponent implements OnInit {
 
   constructor(
-    private spotifyService: SpotifyService
+    private spotifyService: SpotifyService,
+    private router: Router
   ) {
     this.extractCodeFromUrl();
   }
@@ -92,4 +94,13 @@ export class SearchComponent implements OnInit {
     }
   }
 
+  cleanList(searchTerm: HTMLInputElement) {
+    searchTerm.value = "";
+    this.artists = [];
+  }
+
+  navigateToArtist(artistId: string) {
+    this.router.navigate(['/artist', artistId]);
+
+  }
 }
