@@ -1,25 +1,26 @@
 <p>{{user.email}}</p>
 
-<mat-form-field class="example-form-field">
-  <mat-label>Search Artist</mat-label>
-  <input matInput
+<div class="input-container">
+  <input #searchTerm
+    placeholder="Artist Name"
     type="text"
-    [(ngModel)]="searchTerm"
-    (keyup)="search(searchTerm)">
-  <button *ngIf="searchTerm"
-    matSuffix
-    mat-icon-button
-    aria-label="Clear"
-    (click)="searchTerm=''">
+    spellcheck="false"
+    (keyup)="search(searchTerm.value)">
+  <button *ngIf="searchTerm.value!=''"
+    (click)="cleanList(searchTerm)">
     <mat-icon>close</mat-icon>
   </button>
-</mat-form-field>
+</div>
 
-<div *ngIf="artists.length > 0 ">
+<div *ngIf="artists.length > 0 "
+  class="results">
   <ul>
-    <li style="color: white;"
-      *ngFor="let artist of artists">
-      {{artist.name}}
-    </li>
+    <div *ngFor="let artist of artists" (click)="navigateToArtist(artist.id)">
+      <img src="{{artist.images[0].url}}"
+        alt="">
+      <li style="color: white;">
+        {{artist.name}}
+      </li>
+    </div>
   </ul>
 </div>

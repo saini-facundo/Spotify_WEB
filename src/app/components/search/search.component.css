@@ -1,5 +1,78 @@
 p,
-mat-label,
-input {
+mat-label {
   color: var(--font-color);
+}
+
+.input-container {
+  background-color: white;
+  border-radius: 30px;
+  width: 80%;
+  align-items: center;
+  display: flex;
+}
+
+.input-container button {
+  margin-right: 10px;
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+input {
+  border-radius: 30px;
+  width: 80%;
+  padding: 20px;
+  border: 0;
+  flex: 1;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+input:focus {
+  outline: none;
+}
+
+.results {
+  padding: 5px;
+  display: flex;
+  width: 80%;
+  justify-content: center;
+}
+
+.results ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-width: 400px;
+  width: 100%;
+  justify-content: center;
+}
+
+.results ul div {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  background-color: var(--background-elevated-base);
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.results ul div:hover {
+  background-color: var(--background-elevated-highlight);
+  margin-left: 20px;
+  margin-right: -20px;
+}
+
+.results ul img {
+  object-fit: cover;
+  width: 80px;
+  height: 80px;
+  margin-right: 20px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.results ul li {
+  font-size: x-large;
 }
