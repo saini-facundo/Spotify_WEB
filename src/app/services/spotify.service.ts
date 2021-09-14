@@ -4,15 +4,15 @@ import { Token } from '../interfaces/token.inteface';
 import { map } from "rxjs/operators";
 import { User } from '../interfaces/user.interface';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SpotifyService {
 
-  constructor(private http: HttpClient,
-    private router: Router) {
+  constructor(
+    private http: HttpClient
+  ) {
   }
 
   private userLogged: boolean = false;
@@ -82,7 +82,6 @@ export class SpotifyService {
             this.userLogged = true;
           }
           this.user = data;
-          this.router.navigate(['/search']);
           return data;
         }),
       );

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../../services/spotify.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -8,13 +9,24 @@ import { SpotifyService } from '../../services/spotify.service';
 })
 export class LoginComponent implements OnInit {
 
+  constructor(
+    private spotifyService: SpotifyService,
+    private router: Router
+  ) {
+
+  }
+
   ngOnInit(): void {
     this.extractCodeFromUrl();
   }
 
   getRefreshAndAccessToken(code: string) {
     this.spotifyService.requestRefreshAndAccessToken(code).subscribe((data: any) => {
-      this.spotifyService.getUserInfo(this.spotifyService.getToken).subscribe();
+      this.spotifyService.getUserInfo(this.spotifyService.getToken).subscribe(
+        (_) => {
+          this.router.navigate(['/search']);
+        }
+      ); //tendria q llamar a router.navigate(search)
     });
   }
 
@@ -33,11 +45,7 @@ export class LoginComponent implements OnInit {
 
   }
 
-  constructor(
-    private spotifyService: SpotifyService
-  ) {
 
-  }
 
   redirectToSpotifyAuth() {
     this.spotifyService.redirectUserToSpotify();
