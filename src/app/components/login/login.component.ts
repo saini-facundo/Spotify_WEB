@@ -9,9 +9,29 @@ import { SpotifyService } from '../../services/spotify.service';
 export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
+    this.extractCodeFromUrl();
   }
 
-  title = 'Spotify-WEB';
+  getRefreshAndAccessToken(code: string) {
+    this.spotifyService.requestRefreshAndAccessToken(code).subscribe((data: any) => {
+      this.spotifyService.getUserInfo(this.spotifyService.getToken).subscribe();
+    });
+  }
+
+  extractCodeFromUrl() {
+    const search = window.location.search;
+    let code = "";
+    if (search.includes('?code=')) {
+      code = search.substring(
+        search.indexOf('?code=') + 6,
+        search.indexOf('&state=')
+      );
+    }
+    if (code != "") {
+      this.getRefreshAndAccessToken(code);
+    }
+
+  }
 
   constructor(
     private spotifyService: SpotifyService
