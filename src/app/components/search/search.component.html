@@ -1,4 +1,4 @@
-<p>{{user.email}}</p>
+<p>{{spotifyService.getUser.email}}</p>
 
 <div class="input-container">
   <input #searchTerm
@@ -15,7 +15,8 @@
 <div *ngIf="artists.length > 0 "
   class="results">
   <ul>
-    <div *ngFor="let artist of artists" (click)="navigateToArtist(artist.id)">
+    <div *ngFor="let artist of artists"
+      (click)="navigateToArtist(artist.id)">
       <img src="{{artist.images[0].url}}"
         alt="">
       <li style="color: white;">
