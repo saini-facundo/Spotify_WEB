@@ -22,11 +22,11 @@ export class LoginComponent implements OnInit {
 
   getRefreshAndAccessToken(code: string) {
     this.spotifyService.requestRefreshAndAccessToken(code).subscribe((data: any) => {
-      this.spotifyService.getUserInfo(this.spotifyService.getToken).subscribe(
+      this.spotifyService.getUserInfo().subscribe(
         (_) => {
           this.router.navigate(['/search']);
         }
-      ); //tendria q llamar a router.navigate(search)
+      );
     });
   }
 
