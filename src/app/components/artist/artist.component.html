@@ -1,1 +1,38 @@
-<p>artist works!</p>
+<div class="header">
+  <img src="{{artist.images[0].url}}"
+    alt="">
+  <p>{{artist.name}}</p>
+</div>
+
+<section class="info-section">
+  <p class="section-title">Géneros</p>
+  <div class="genres-container">
+    <div class="genre"
+      *ngFor="let genre of artist.genres">
+      <p>{{genre}}</p>
+    </div>
+  </div>
+</section>
+
+<section class="albums-section">
+  <p class="section-title">Albums</p>
+  <div class="albums-container">
+    <div class="album"
+      *ngFor="let album of artistAlbums">
+      <img src="{{album.images[0].url}}"
+        alt="">
+      <p class="album-title">{{album.name}}</p>
+      <div class="release-fav-container">
+        <p class="album-release-date">{{album.release_date| date: 'yyyy'}}</p>
+        <mat-icon class="heart-regular"
+          *ngIf="!album.isFav"
+          svgIcon="heart-regular"
+          (click)="saveAlbum(album)"></mat-icon>
+        <mat-icon class="heart-solid"
+          *ngIf="album.isFav"
+          svgIcon="heart-solid"
+          (click)="deleteAlbum(album)"></mat-icon>
+      </div>
+    </div>
+  </div>
+</section>

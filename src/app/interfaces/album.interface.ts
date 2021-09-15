@@ -11,4 +11,5 @@ export interface Album {
   total_tracks: number;
   type: string;
   uri: string;
+  isFav: boolean;
 }

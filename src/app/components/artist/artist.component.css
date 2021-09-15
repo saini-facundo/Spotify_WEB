@@ -1,0 +1,134 @@
+  .header {
+    display: flex;
+    align-items: center;
+    border-radius: 5px;
+    background-color: var(--background-press);
+    margin-bottom: 10px;
+  }
+
+  .header img {
+    width: 200px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+  }
+
+  .header p {
+    color: var(--font-color);
+    flex: 1;
+    font-size: 60px;
+    font-weight: 500;
+    margin-left: 60px;
+  }
+
+  .albums-section,
+  .info-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .section-title {
+    color: var(--font-color);
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .albums-section .albums-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .album {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-highlight);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+  }
+
+  .album:hover {
+    background-color: var(--background-elevated-base);
+  }
+
+  .album img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .album-title {
+    color: var(--font-color);
+    font-weight: 500;
+    margin: 0;
+    margin-top: 5px;
+    max-width: 140px;
+    flex: 1;
+  }
+
+  .album-release-date {
+    color: var(--font-color);
+    margin: 0;
+    margin-top: 5px;
+    max-width: 140px;
+    align-self: baseline;
+  }
+
+  .heart-solid {
+    cursor: pointer;
+    color: var(--accent-color);
+  }
+
+  .heart-solid:hover {
+    color: var(--font-color);
+  }
+
+  .heart-regular {
+    cursor: pointer;
+    color: var(--background-elevated-highlight);
+  }
+
+  .heart-regular:hover {
+    cursor: pointer;
+    color: var(--font-color);
+  }
+
+  .release-fav-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+    align-items: center;
+  }
+
+  .info-section {
+    display: flex;
+    justify-content: center;
+  }
+
+  .genres-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+  }
+
+  .genre {
+    cursor: pointer;
+    width: fit-content;
+    color: var(--font-color);
+    padding: 5px 20px;
+    margin: 5px 10px;
+    background-color: var(--background-highlight);
+    border-radius: 20px;
+    text-align: center;
+  }
+
+  .genre p {
+    margin: 0;
+  }
+
+  .genre:hover {
+    background-color: var(--background-elevated-base);
+  }
