@@ -1,6 +1,8 @@
+import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SpotifyService } from 'src/app/services/spotify.service';
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -25,7 +27,7 @@ export class SearchComponent implements OnInit {
 
   search(term: string) {
     if (term.length > 2) {
-      this.spotifyService.searchArtist(term, this.spotifyService.getToken).subscribe((artists: any) => {
+      this.spotifyService.searchArtist(term).subscribe((artists: any) => {
         this.artists = artists;
       });
     }

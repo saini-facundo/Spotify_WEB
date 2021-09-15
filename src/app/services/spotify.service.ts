@@ -48,45 +48,7 @@ export class SpotifyService {
     uri: ''
   };
 
-  redirectUserToSpotify() {
-    const url = `https://accounts.spotify.com/authorize?client_id=7476fa75797740148fe7ed759ebd83d6&redirect_uri=http://localhost:4200/login&scope=user-read-private%20user-read-email&response_type=code&state=123`;
-    window.location.href = url;
-  }
-
-  requestRefreshAndAccessToken(code: string) {
-    const url = `https://accounts.spotify.com/api/token`;
-    const body = new HttpParams()
-      .set('grant_type', 'authorization_code')
-      .set('code', code)
-      .set('redirect_uri', 'http://localhost:4200/login')
-      .set('client_id', '7476fa75797740148fe7ed759ebd83d6')
-      .set('client_secret', 'b5b8fb3815d34a2b852f88621311331b');
-
-    return this.http.post(url, body).pipe(
-      map((data: any) => {
-        this.token = data;
-        return data;
-      }),
-    );;
-  }
-
-  getUserInfo(token: Token): Observable<User> {
-    const url = `https://api.spotify.com/v1/me`;
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token.access_token}`
-    });
-    return this.http.get(url, { headers })
-      .pipe(
-        map((data: any) => {
-          if (data.id) {
-            this.userLogged = true;
-          }
-          this.user = data;
-          return data;
-        }),
-      );
-  }
-
+  headers: any;
 
   public get isUserLogged(): boolean {
     return this.userLogged;
@@ -100,16 +62,124 @@ export class SpotifyService {
     return this.token;
   }
 
+  redirectUserToSpotify() {
 
+    const url = `https://accounts.spotify.com/authorize?client_id=7476fa75797740148fe7ed759ebd83d6&redirect_uri=http://localhost:4200/login&scope=user-read-private%20user-read-email%20user-library-read%20user-library-modify&response_type=code&state=123`;
+    window.location.href = url;
 
-  searchArtist(term: string, token: Token) {
+  }
+
+  requestRefreshAndAccessToken(code: string) {
+
+    const url = `https://accounts.spotify.com/api/token`;
+
+    const body = new HttpParams()
+      .set('grant_type', 'authorization_code')
+      .set('code', code)
+      .set('redirect_uri', 'http://localhost:4200/login')
+      .set('client_id', '7476fa75797740148fe7ed759ebd83d6')
+      .set('client_secret', 'b5b8fb3815d34a2b852f88621311331b');
+
+    return this.http.post(url, body).pipe(
+      map((data: any) => {
+        this.token = data;
+        this.headers = new HttpHeaders({
+          'Authorization': `Bearer ${this.token.access_token}`
+        });
+        return data;
+      }),
+    );
+
+  }
+
+  getUserInfo(): Observable<User> {
+
+    const url = `https://api.spotify.com/v1/me`;
+
+    return this.http.get(url, { headers: this.headers })
+      .pipe(
+        map((data: any) => {
+          if (data.id) {
+            this.userLogged = true;
+          }
+          this.user = data;
+          return data;
+        }),
+      );
+
+  }
+
+  searchArtist(term: string) {
+
     const url = `https://api.spotify.com/v1/search?q=${term}&type=artist`;
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token.access_token}`
-    });
-    return this.http.get(url, { headers })
+
+    return this.http.get(url, { headers: this.headers })
       .pipe(
         map((data: any) => { return data.artists.items; })
       );
+
   }
+
+  getArtist(id: string) {
+
+    const url = `https://api.spotify.com/v1/artists/${id}`;
+
+    return this.http.get(url, { headers: this.headers })
+      .pipe(
+        map((data: any) => { return data; })
+      );
+
+  }
+
+  getArtistsAlbums(id: string) {
+
+    const url = `	https://api.spotify.com/v1/artists/${id}/albums`;
+
+    return this.http.get(url, { headers: this.headers })
+      .pipe(
+        map((data: any) => { return data.items; })
+      );
+
+  }
+
+  checkSavedAlbums(albumsIds: string[]) {
+
+    const url = `https://api.spotify.com/v1/me/albums/contains?`;
+
+    const params = new HttpParams()
+      .set('ids', albumsIds.toString());
+
+    return this.http.get(url, { headers: this.headers, params: params })
+      .pipe(
+        map((data: any) => { return data; })
+      );
+
+  }
+
+  saveAlbum(albumId: string) {
+
+    const url = `https://api.spotify.com/v1/me/albums`;
+
+    const params = new HttpParams()
+      .set('ids', albumId);
+
+    return this.http.put(url, { headers: this.headers, params: params })
+      .pipe(
+        map((data: any) => { return data; })
+      );
+
+  }
+
+  removeAlbum(albumId: string) {
+    const url = `https://api.spotify.com/v1/me/albums`;
+
+    const params = new HttpParams()
+      .set('ids', albumId);
+
+    return this.http.delete(url, { headers: this.headers, params: params })
+      .pipe(
+        map((data: any) => { return data; })
+      );
+  }
+
 }
