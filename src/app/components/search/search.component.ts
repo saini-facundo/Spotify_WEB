@@ -1,6 +1,7 @@
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { SpotifyService } from 'src/app/services/spotify.service';
 
 @Component({
@@ -12,7 +13,8 @@ export class SearchComponent implements OnInit {
 
   constructor(
     public spotifyService: SpotifyService,
-    private router: Router
+    private router: Router,
+    private toastrService: ToastrService
   ) {
   }
 
@@ -27,9 +29,14 @@ export class SearchComponent implements OnInit {
 
   search(term: string) {
     if (term.length > 2) {
-      this.spotifyService.searchArtist(term).subscribe((artists: any) => {
-        this.artists = artists;
-      });
+      this.spotifyService.searchArtist(term).subscribe(
+        (artists: any) => {
+          this.artists = artists;
+        },
+        (error) => {
+          this.toastrService.error(`${error.message}`, "Error");
+        }
+      );
     }
   }
 
@@ -40,6 +47,5 @@ export class SearchComponent implements OnInit {
 
   navigateToArtist(artistId: string) {
     this.router.navigate(['/artist', artistId]);
-
   }
 }

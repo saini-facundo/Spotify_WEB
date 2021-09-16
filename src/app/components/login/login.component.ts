@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../../services/spotify.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -11,7 +12,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private spotifyService: SpotifyService,
-    private router: Router
+    private router: Router,
+    private toastrService: ToastrService
   ) {
 
   }
@@ -25,6 +27,9 @@ export class LoginComponent implements OnInit {
       this.spotifyService.getUserInfo().subscribe(
         (_) => {
           this.router.navigate(['/search']);
+        },
+        (error) => {
+          this.toastrService.error(`${error.message}`, "Error");
         }
       );
     });
