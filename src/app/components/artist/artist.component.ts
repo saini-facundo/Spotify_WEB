@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { SpotifyService } from '../../services/spotify.service';
 import { Album } from '../../interfaces/album.interface';
 import { Artist } from '../../interfaces/artist.interface';
-
+import { MatIconRegistry } from '@angular/material/icon';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-artist',
   templateUrl: './artist.component.html',
@@ -13,7 +14,9 @@ export class ArtistComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private spotifyService: SpotifyService
+    private spotifyService: SpotifyService,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitzer: DomSanitizer,
   ) { }
 
   artistId: any;
@@ -43,9 +46,30 @@ export class ArtistComponent implements OnInit {
 
     this.spotifyService.getArtistsAlbums(this.artistId).subscribe((albums: Album[]) => {
       this.artistAlbums = albums;
-      this.spotifyService.checkSavedAlbums([this.artistAlbums[0].id]).subscribe();
+      this.artistAlbums.forEach(album => {
+        this.isFav(album);
+      });
     });
 
+    this.matIconRegistry.addSvgIcon(
+      'heart-regular',
+      this.domSanitzer.bypassSecurityTrustResourceUrl('../../../assets/heart-regular.svg'));
+
+    this.matIconRegistry.addSvgIcon(
+      'heart-solid',
+      this.domSanitzer.bypassSecurityTrustResourceUrl('../../../assets/heart-solid.svg'));
+  }
+
+  isFav(album: Album) {
+    this.spotifyService.checkSavedAlbums([album.id]).subscribe((data) => { album.isFav = data[0]; });
+  }
+
+  saveAlbum(album: Album) {
+    this.spotifyService.saveAlbum(album.id).subscribe((_) => { this.isFav(album); });
+  }
+
+  deleteAlbum(album: Album) {
+    this.spotifyService.removeAlbum(album.id).subscribe((_) => { this.isFav(album); });
   }
 
 }
