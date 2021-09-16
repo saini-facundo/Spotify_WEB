@@ -17,7 +17,7 @@
   <ul>
     <div *ngFor="let artist of artists"
       (click)="navigateToArtist(artist.id)">
-      <img src="{{artist.images[0].url}}"
+      <img src="{{artist.images|noimage}}"
         alt="">
       <li style="color: white;">
         {{artist.name}}

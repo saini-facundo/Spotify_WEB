@@ -148,7 +148,7 @@ export class SpotifyService {
 
     const params = new HttpParams()
       .set('ids', albumsIds.toString());
-    console.log('HEADER CHECK : ', this.headers);
+
     return this.http.get(url, { headers: this.headers, params: params })
       .pipe(
         map((data: any) => { return data; })
@@ -163,12 +163,7 @@ export class SpotifyService {
     const params = new HttpParams()
       .set('ids', albumId);
 
-    console.log('HEADER : ', this.headers);
-
-    return this.http.put(url, {}, { headers: this.headers, params: params })
-      .pipe(
-        map((data: any) => { return data; })
-      );
+    return this.http.put(url, {}, { headers: this.headers, params: params });
 
   }
 
@@ -178,10 +173,7 @@ export class SpotifyService {
     const params = new HttpParams()
       .set('ids', albumId);
 
-    return this.http.delete(url, { headers: this.headers, params: params })
-      .pipe(
-        map((data: any) => { return data; })
-      );
+    return this.http.delete(url, { headers: this.headers, params: params });
   }
 
 }

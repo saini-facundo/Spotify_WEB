@@ -1,5 +1,5 @@
 <div class="header">
-  <img src="{{artist.images[0].url}}"
+  <img src="{{artist.images|noimage}}"
     alt="">
   <p>{{artist.name}}</p>
 </div>
@@ -7,6 +7,7 @@
 <section class="info-section">
   <p class="section-title">Géneros</p>
   <div class="genres-container">
+    <p class="genre" *ngIf="artist.genres.length==0">No hay genéros para mostrar</p>
     <div class="genre"
       *ngFor="let genre of artist.genres">
       <p>{{genre}}</p>
@@ -19,7 +20,7 @@
   <div class="albums-container">
     <div class="album"
       *ngFor="let album of artistAlbums">
-      <img src="{{album.images[0].url}}"
+      <img src="{{album.images|noimage}}"
         alt="">
       <p class="album-title">{{album.name}}</p>
       <div class="release-fav-container">

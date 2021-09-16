@@ -16,13 +16,16 @@ import { ROUTES } from './app.routes';
 import { LoginComponent } from './components/login/login.component';
 import { SearchComponent } from './components/search/search.component';
 import { ArtistComponent } from './components/artist/artist.component';
+import { ToastrModule } from 'ngx-toastr';
+import { NoimagePipe } from './pipes/noimage.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     SearchComponent,
-    ArtistComponent
+    ArtistComponent,
+    NoimagePipe
   ],
   imports: [
     BrowserModule,
@@ -34,7 +37,8 @@ import { ArtistComponent } from './components/artist/artist.component';
     MatIconModule,
     FormsModule,
     HttpClientModule,
-    RouterModule.forRoot(ROUTES)
+    RouterModule.forRoot(ROUTES),
+    ToastrModule.forRoot()
   ],
   providers: [SpotifyService],
   bootstrap: [AppComponent]
