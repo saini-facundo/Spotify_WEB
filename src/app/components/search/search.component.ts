@@ -2,6 +2,7 @@ import { variable } from '@angular/compiler/src/output/output_ast';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { LastVisitedScreenService } from 'src/app/services/last-visited-screen.service';
 import { SpotifyService } from 'src/app/services/spotify.service';
 
 @Component({
@@ -14,11 +15,13 @@ export class SearchComponent implements OnInit {
   constructor(
     public spotifyService: SpotifyService,
     private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private lastVisited: LastVisitedScreenService
   ) {
   }
 
   ngOnInit(): void {
+    this.lastVisited.setLastVisitedScreen();
   }
 
   userImg = "";
