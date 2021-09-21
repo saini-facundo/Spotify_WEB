@@ -24,7 +24,6 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
 
     this.goToLastVisitedScreen();
-    this.getUserData();
 
   }
 
@@ -58,7 +57,9 @@ export class LoginComponent implements OnInit {
     if (this.lastVisitedService.getLastVisitedScreen().token.access_token != "") {
       this.lastSession = this.lastVisitedService.getLastVisitedScreen();
       this.spotifyService.getLastSession(this.lastSession);
-      this.router.navigateByUrl(this.lastSession.screen);
+      this.router.navigate([this.lastSession.screen]);
+    } else {
+      this.getUserData();
     }
 
   }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SpotifyService } from './spotify.service';
 import { Session } from '../interfaces/session.interface';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,12 @@ import { Session } from '../interfaces/session.interface';
 export class LastVisitedScreenService {
 
   constructor(
-    private spotifyService: SpotifyService
+    private spotifyService: SpotifyService,
+    private router: Router
   ) { }
 
   public setLastVisitedScreen() {
-    localStorage.setItem("lastVisitedScreen", window.location.href);
+    localStorage.setItem("lastVisitedScreen", this.router.url);
     this.setLastUserToken();
   }
 
@@ -45,7 +47,7 @@ export class LastVisitedScreenService {
     if (localStorage.getItem("lastToken") != null) {
       lastSession = {
         screen: localStorage.getItem("lastVisitedScreen")!,
-        user:JSON.parse(localStorage.getItem("lastUser")!),
+        user: JSON.parse(localStorage.getItem("lastUser")!),
         token: JSON.parse(localStorage.getItem("lastToken")!),
         userCode: localStorage.getItem("lastCode")!
       };
