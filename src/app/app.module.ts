@@ -17,6 +17,7 @@ import { SearchComponent } from './components/search/search.component';
 import { ArtistComponent } from './components/artist/artist.component';
 import { ToastrModule } from 'ngx-toastr';
 import { NoimagePipe } from './pipes/noimage.pipe';
+import { NavbarComponent } from './shared/components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NoimagePipe } from './pipes/noimage.pipe';
     LoginComponent,
     SearchComponent,
     ArtistComponent,
-    NoimagePipe
+    NoimagePipe,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

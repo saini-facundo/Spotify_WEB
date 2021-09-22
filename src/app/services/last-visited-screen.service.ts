@@ -59,9 +59,16 @@ export class LastVisitedScreenService {
     if (this.spotifyService.getToken.access_token) {
       localStorage.setItem("lastToken", JSON.stringify(this.spotifyService.getToken));
       localStorage.setItem("lastUser", JSON.stringify(this.spotifyService.getUser));
-      localStorage.setItem("lastCode", JSON.stringify(this.spotifyService.getCode));
+      localStorage.setItem("lastCode", this.spotifyService.getCode);
     }
 
+  }
+
+  resetToken() {
+    localStorage.removeItem("lastToken");
+    localStorage.removeItem("lastUser");
+    localStorage.removeItem("lastCode");
+    localStorage.removeItem("lastVisitedScreen");
   }
 
 }

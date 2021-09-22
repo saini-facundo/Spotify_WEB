@@ -1,0 +1,13 @@
+<ul *ngIf="spotifyService.isUserLogged" >
+
+  <li class="nav-item"
+    routerLinkActive="active">
+    <a class="nav-link"
+      routerLink="search">Buscar</a>
+  </li>
+
+  <li>
+    <button (click)="logout()">Log out</button>
+  </li>
+
+</ul>

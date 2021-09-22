@@ -69,7 +69,6 @@ export class SpotifyService {
     return this.token;
   }
 
-
   public setToken(token: any) {
     this.token = token;
   }
@@ -78,12 +77,18 @@ export class SpotifyService {
     return this.userCode;
   }
 
-
   redirectUserToSpotify() {
 
-    const url = `https://accounts.spotify.com/authorize?client_id=7476fa75797740148fe7ed759ebd83d6&redirect_uri=http://localhost:4200/login&scope=user-read-private%20user-read-email%20user-library-read%20user-library-modify&response_type=code&state=123`;
+    const url = `https://accounts.spotify.com/authorize?client_id=7476fa75797740148fe7ed759ebd83d6&redirect_uri=http://localhost:4200/login&scope=user-read-private%20user-read-email%20user-library-read%20user-library-modify&response_type=code&state=123&show_dialog=true`;
     window.location.href = url;
 
+  }
+
+  logOut() {
+    this.setIsUserLogged(false);
+    const url = ' https://accounts.spotify.com/en/logout';
+    const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=400,height=400,margin=auto');
+    setTimeout(() => spotifyLogoutWindow!.close(), 2000);
   }
 
   extractCodeFromUrl() {
