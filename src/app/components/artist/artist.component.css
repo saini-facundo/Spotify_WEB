@@ -70,9 +70,8 @@
   .album-release-date {
     color: var(--font-color);
     margin: 0;
-    margin-top: 5px;
     max-width: 140px;
-    align-self: baseline;
+    align-self: center;
   }
 
   .heart-solid {

@@ -4,6 +4,7 @@ import { Token } from '../interfaces/token.inteface';
 import { map } from "rxjs/operators";
 import { User } from '../interfaces/user.interface';
 import { Observable } from 'rxjs';
+import { Session } from '../interfaces/session.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -48,10 +49,16 @@ export class SpotifyService {
     uri: ''
   };
 
+  userCode = "";
+
   headers: any;
 
   public get isUserLogged(): boolean {
     return this.userLogged;
+  }
+
+  public setIsUserLogged(isLogged: boolean) {
+    this.userLogged = isLogged;
   }
 
   public get getUser(): User {
@@ -62,20 +69,47 @@ export class SpotifyService {
     return this.token;
   }
 
+  public setToken(token: any) {
+    this.token = token;
+  }
+
+  public get getCode(): string {
+    return this.userCode;
+  }
+
   redirectUserToSpotify() {
 
-    const url = `https://accounts.spotify.com/authorize?client_id=7476fa75797740148fe7ed759ebd83d6&redirect_uri=http://localhost:4200/login&scope=user-read-private%20user-read-email%20user-library-read%20user-library-modify&response_type=code&state=123`;
+    const url = `https://accounts.spotify.com/authorize?client_id=7476fa75797740148fe7ed759ebd83d6&redirect_uri=http://localhost:4200/login&scope=user-read-private%20user-read-email%20user-library-read%20user-library-modify&response_type=code&state=123&show_dialog=true`;
     window.location.href = url;
 
   }
 
-  requestRefreshAndAccessToken(code: string) {
+  logOut() {
+    this.setIsUserLogged(false);
+    const url = ' https://accounts.spotify.com/en/logout';
+    const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=400,height=400,margin=auto');
+    setTimeout(() => spotifyLogoutWindow!.close(), 2000);
+  }
+
+  extractCodeFromUrl() {
+    const search = window.location.search;
+
+    if (search.includes('?code=')) {
+      this.userCode = search.substring(
+        search.indexOf('?code=') + 6,
+        search.indexOf('&state=')
+      );
+    }
+
+  }
+
+  requestRefreshAndAccessToken() {
 
     const url = `https://accounts.spotify.com/api/token`;
 
     const body = new HttpParams()
       .set('grant_type', 'authorization_code')
-      .set('code', code)
+      .set('code', this.userCode)
       .set('redirect_uri', 'http://localhost:4200/login')
       .set('client_id', '7476fa75797740148fe7ed759ebd83d6')
       .set('client_secret', 'b5b8fb3815d34a2b852f88621311331b');
@@ -107,6 +141,16 @@ export class SpotifyService {
         }),
       );
 
+  }
+
+  getLastSession(session: Session) {
+    this.token = session.token;
+    this.user = session.user;
+    this.userLogged = true;
+    this.userCode = session.userCode;
+    this.headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token.access_token}`
+    });
   }
 
   searchArtist(term: string) {

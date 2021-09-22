@@ -6,6 +6,7 @@ import { Artist } from '../../interfaces/artist.interface';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
+import { LastVisitedScreenService } from 'src/app/services/last-visited-screen.service';
 @Component({
   selector: 'app-artist',
   templateUrl: './artist.component.html',
@@ -18,7 +19,8 @@ export class ArtistComponent implements OnInit {
     private spotifyService: SpotifyService,
     private matIconRegistry: MatIconRegistry,
     private domSanitzer: DomSanitizer,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private lastVisited: LastVisitedScreenService
   ) { }
 
   artistId: any;
@@ -62,6 +64,8 @@ export class ArtistComponent implements OnInit {
         this.toastrService.error(`${error.message}`, "Error");
       }
     );
+    
+    this.lastVisited.setLastVisitedScreen();
 
     this.matIconRegistry.addSvgIcon(
       'heart-regular',
